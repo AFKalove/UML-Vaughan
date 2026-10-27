@@ -1,0 +1,15 @@
+/* Tailind CSS Config In-Script Simulation */
+script {
+    display: none;
+}
+
+/* Pola Dots Ukuran Lebih Besar & Renggang (36px 36px) */
+.bg-dots {
+    background-image: radial-gradient(circle, rgba(220, 38, 38, 0.25) 3px, transparent 3px);
+    background-size: 36px 36px;
+}
+
+.dark .bg-dots {
+    background-image: radial-gradient(circle, rgba(52, 211, 153, 0.3) 3px, transparent 3px);
+    background-size: 36px 36px;
+}
