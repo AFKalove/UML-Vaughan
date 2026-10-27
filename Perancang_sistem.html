@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembelajaran Use Case Diagram | Kwik Kian Gie</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FDFBF7',
+                        darkbg: '#121824',
+                        brandRed: '#DC2626',
+                        brandYellow: '#EAB308',
+                        brandGreen: '#16A34A',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Pola Dots Ukuran Lebih Besar & Renggang (36px 36px) */
+        .bg-dots {
+            background-image: radial-gradient(circle, rgba(220, 38, 38, 0.25) 3px, transparent 3px);
+            background-size: 36px 36px;
+        }
+
+        .dark .bg-dots {
+            background-image: radial-gradient(circle, rgba(52, 211, 153, 0.3) 3px, transparent 3px);
+            background-size: 36px 36px;
+        }
+    </style>
+</head>
+<body class="bg-cream text-gray-800 dark:bg-darkbg dark:text-gray-100 font-sans transition-colors duration-300 min-h-screen flex flex-col justify-between">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 w-full bg-cream/90 dark:bg-darkbg/90 backdrop-blur-md z-40 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Mac OS Style Dots & Title -->
+            <div class="flex items-center space-x-3">
+                <span class="w-3.5 h-3.5 rounded-full bg-brandRed inline-block"></span>
+                <span class="w-3.5 h-3.5 rounded-full bg-brandYellow inline-block"></span>
+                <span class="w-3.5 h-3.5 rounded-full bg-brandGreen inline-block"></span>
+                <span class="font-bold text-base sm:text-lg tracking-wide text-gray-900 dark:text-white ml-1">Modul Use Case</span>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center space-x-6 font-medium text-sm">
+                <a href="#hero" class="hover:text-brandRed transition">Utama</a>
+                <a href="#konsep" class="hover:text-brandRed transition">Konsep UML</a>
+                <a href="#elemen" class="hover:text-brandRed transition">Simbol & Elemen</a>
+                <a href="#relasi" class="hover:text-brandRed transition">Relasi Use Case</a>
+                <a href="#feedback" class="hover:text-brandRed transition">Feedback</a>
+            </div>
+
+            <!-- Dark Mode & Auth Status Area -->
+            <div class="flex items-center space-x-3">
+                <button id="theme-toggle" class="p-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-yellow-400 hover:scale-105 transition">
+                    <i id="theme-toggle-dark-icon" class="fas fa-moon text-base hidden"></i>
+                    <i id="theme-toggle-light-icon" class="fas fa-sun text-base"></i>
+                </button>
+
+                <!-- Auth Container (Switches between Login Button & User Profile) -->
+                <div id="auth-container">
+                    <button id="open-login-btn" onclick="toggleLoginModal(true)" class="bg-brandRed text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-red-700 shadow-md transition flex items-center space-x-2">
+                        <i class="fas fa-right-to-bracket"></i>
+                        <span>Login</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative min-h-screen pt-24 pb-16 flex items-center bg-dots overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-7 space-y-6">
+                    <div class="inline-flex items-center space-x-2 bg-yellow-100 dark:bg-yellow-900/40 text-yellow-800 dark:text-yellow-300 px-3 py-1.5 rounded-full text-xs font-semibold border border-yellow-300 dark:border-yellow-700">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Institut Bisnis dan Informatika Kwik Kian Gie • Minggu ke-4</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight">
+                        Analisis & Perancangan Sistem Informasi: <span class="text-brandRed underline decoration-brandYellow">Use Case Diagram</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed">
+                        Modul pembelajaran interaktif perkuliahan untuk memahami pemodelan proses bisnis, analisis kebutuhan fungsional, dan visualisasi interaksi aktor dengan sistem.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="#konsep" class="bg-brandRed text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-700 shadow-lg shadow-red-500/30 transition transform hover:-translate-y-0.5">
+                            Mulai Belajar <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#elemen" class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 px-6 py-3 rounded-xl font-semibold hover:border-brandGreen transition">
+                            Lihat Simbol Use Case
+                        </a>
+                    </div>
+                </div>
+
+                <!-- GAMBARAN LOGO / VISUALISASI MINI USE CASE DIAGRAM -->
+                <div class="md:col-span-5">
+                    <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur border-2 border-brandRed rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+                        <div class="text-xs font-bold uppercase tracking-wider text-brandRed dark:text-red-400 flex items-center justify-center space-x-2">
+                            <i class="fas fa-diagram-project"></i>
+                            <span>Gambaran Visual Use Case</span>
+                        </div>
+
+                        <!-- Mini Visual Use Case Diagram -->
+                        <div class="bg-cream dark:bg-gray-900 border border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-6 relative flex items-center justify-around min-h-[220px]">
+                            <!-- Actor Stick Figure -->
+                            <div class="flex flex-col items-center z-10">
+                                <div class="w-8 h-8 rounded-full border-2 border-brandRed flex items-center justify-center font-bold text-brandRed text-xs">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="w-0.5 h-6 bg-brandRed"></div>
+                                <div class="w-8 h-0.5 bg-brandRed"></div>
+                                <div class="flex space-x-2">
+                                    <div class="w-0.5 h-6 bg-brandRed transform -rotate-12"></div>
+                                    <div class="w-0.5 h-6 bg-brandRed transform rotate-12"></div>
+                                </div>
+                                <span class="text-[11px] font-bold mt-1 text-gray-700 dark:text-gray-300">Aktor</span>
+                            </div>
+
+                            <!-- Association Line -->
+                            <div class="flex-1 h-0.5 bg-brandYellow mx-2 relative flex items-center justify-center">
+                                <span class="absolute -top-4 text-[9px] font-mono text-gray-500 dark:text-gray-400 bg-cream dark:bg-gray-900 px-1">Asosiasi</span>
+                            </div>
+
+                            <!-- Oval Use Case -->
+                            <div class="w-28 h-16 rounded-full border-2 border-brandGreen bg-white dark:bg-gray-800 flex items-center justify-center px-2 text-center shadow-md z-10">
+                                <span class="text-xs font-extrabold text-brandGreen">Use Case</span>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-gray-500 dark:text-gray-400 italic">
+                            Menggambarkan interaksi langsung antara Aktor eksternal dengan Fungsi Sistem.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: KONSEP DASAR & SEJARAH UML -->
+    <section id="konsep" class="py-20 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-brandGreen font-bold tracking-wider uppercase text-sm">Landasan Teori</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold">Definisi & Sejarah UML</h2>
+                <p class="text-gray-600 dark:text-gray-400">Unified Modeling Language sebagai bahasa baku pemodelan sistem berorientasi objek.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Definisi UML -->
+                <div class="bg-cream dark:bg-gray-800 p-8 rounded-2xl border-l-4 border-brandRed shadow-sm">
+                    <div class="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900/50 text-brandRed flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Apa itu UML?</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
+                        Menurut <strong>Sukamto & Shalahuddin (2013)</strong>, UML muncul karena kebutuhan visual untuk menspesifikasikan, menggambarkan, membangun, dan mendokumentasikan artefak sistem perangkat lunak.
+                    </p>
+                    <div class="bg-white dark:bg-gray-700/50 p-4 rounded-xl text-xs text-gray-600 dark:text-gray-300">
+                        <i class="fas fa-info-circle text-brandYellow mr-1"></i> Penekanan utama: UML menjelaskan <em>"apa yang diperbuat sistem"</em>, bukan <em>"bagaimana cara kerjanya"</em>.
+                    </div>
+                </div>
+
+                <!-- Sejarah Penyatuan -->
+                <div class="bg-cream dark:bg-gray-800 p-8 rounded-2xl border-l-4 border-brandYellow shadow-sm">
+                    <div class="w-12 h-12 rounded-xl bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Sejarah Penyatuan (1995)</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
+                        UML merupakan hasil penyatuan 3 metode pemodelan berorientasi objek utama:
+                    </p>
+                    <div class="grid grid-cols-3 gap-2 text-center text-xs font-semibold">
+                        <div class="p-3 bg-white dark:bg-gray-700 rounded-lg shadow-sm">
+                            <span class="block text-brandRed font-bold">G. Booch</span>
+                            <span class="text-gray-500 dark:text-gray-300">OOD</span>
+                        </div>
+                        <div class="p-3 bg-white dark:bg-gray-700 rounded-lg shadow-sm">
+                            <span class="block text-brandYellow font-bold">J. Rumbaugh</span>
+                            <span class="text-gray-500 dark:text-gray-300">OMT</span>
+                        </div>
+                        <div class="p-3 bg-white dark:bg-gray-700 rounded-lg shadow-sm">
+                            <span class="block text-brandGreen font-bold">I. Jacobson</span>
+                            <span class="text-gray-500 dark:text-gray-300">OOSE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: ELEMEN & SIMBOL USE CASE DIAGRAM -->
+    <section id="elemen" class="py-20 bg-cream dark:bg-darkbg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-brandRed font-bold tracking-wider uppercase text-sm">Komponen Utama</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold">Simbol & Elemen Use Case</h2>
+                <p class="text-gray-600 dark:text-gray-400">Elemen-elemen penyusun Use Case Diagram berdasarkan Dennis et al. (2015).</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Actor -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm hover:border-brandRed transition">
+                    <div class="text-4xl text-brandRed mb-4 text-center"><i class="fas fa-user-large"></i></div>
+                    <h3 class="text-lg font-bold text-center mb-2">Aktor (Actor)</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed text-center">
+                        Orang atau sistem eksternal yang berinteraksi langsung dengan sistem untuk mencapai tujuan tertentu.
+                    </p>
+                </div>
+
+                <!-- Use Case -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm hover:border-brandYellow transition">
+                    <div class="w-16 h-10 mx-auto border-2 border-brandYellow rounded-full flex items-center justify-center text-xs font-bold text-yellow-700 dark:text-yellow-400 mb-4">Use Case</div>
+                    <h3 class="text-lg font-bold text-center mb-2">Use Case</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed text-center">
+                        Deskripsi fungsi/layanan sistem. Diberi nama menggunakan kata kerja dan kata benda deskriptif.
+                    </p>
+                </div>
+
+                <!-- Association -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm hover:border-brandGreen transition">
+                    <div class="w-16 h-0.5 bg-brandGreen mx-auto my-6"></div>
+                    <h3 class="text-lg font-bold text-center mb-2">Association</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed text-center">
+                        Garis penghubung yang menandakan hubungan interaksi antara aktor dengan Use Case.
+                    </p>
+                </div>
+
+                <!-- System Boundary -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border-2 border-dashed border-gray-400 dark:border-gray-600 shadow-sm hover:border-brandRed transition">
+                    <div class="w-12 h-12 border border-gray-400 rounded mx-auto mb-2 flex items-center justify-center text-[10px] text-gray-400">Boundary</div>
+                    <h3 class="text-lg font-bold text-center mb-2">System Boundary</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed text-center">
+                        Kotak pembatas lingkup sistem. Aktor diletakkan di luar pembatas sistem ini.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: RELASI INCLUDE, EXTEND, GENERALIZATION -->
+    <section id="relasi" class="py-20 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-brandYellow font-bold tracking-wider uppercase text-sm">Hubungan Antar Fungsi</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold">Relasi dalam Use Case Diagram</h2>
+                <p class="text-gray-600 dark:text-gray-400">Penjelasan detail relasi Include, Extend, dan Generalization beserta contohnya.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- INCLUDE -->
+                <div class="bg-cream dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-red-100 dark:bg-red-900/50 text-brandRed font-mono text-xs px-3 py-1 rounded-full mb-4 font-bold">&lt;&lt;include&gt;&gt;</span>
+                        <h3 class="text-xl font-bold mb-3">Relasi Include (Wajib)</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                            Relasi wajib di mana Use Case utama membutuhkan Use Case tambahan untuk menjalankan fungsinya. Panah mengarah ke Use Case yang dibutuhkan.
+                        </p>
+                    </div>
+                    <div class="bg-white dark:bg-gray-700 p-4 rounded-xl text-xs space-y-2">
+                        <strong class="text-brandRed">Contoh Kasus:</strong>
+                        <p class="text-gray-600 dark:text-gray-300 font-mono">Mengelola Anggota --&lt;&lt;include&gt;&gt;--&gt; Login</p>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400">Login adalah syarat wajib yang harus dilakukan terlebih dahulu.</p>
+                    </div>
+                </div>
+
+                <!-- EXTEND -->
+                <div class="bg-cream dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-300 font-mono text-xs px-3 py-1 rounded-full mb-4 font-bold">&lt;&lt;extend&gt;&gt;</span>
+                        <h3 class="text-xl font-bold mb-3">Relasi Extend (Opsional)</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                            Relasi opsional di mana Use Case tambahan hanya berjalan dalam kondisi tertentu. Panah mengarah ke Use Case dasar.
+                        </p>
+                    </div>
+                    <div class="bg-white dark:bg-gray-700 p-4 rounded-xl text-xs space-y-2">
+                        <strong class="text-brandYellow">Contoh Kasus:</strong>
+                        <p class="text-gray-600 dark:text-gray-300 font-mono">Buka Deposito --&lt;&lt;extend&gt;&gt;--&gt; Buka Rekening</p>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400">Membuka deposito bersifat opsional setelah membuka rekening dasar.</p>
+                    </div>
+                </div>
+
+                <!-- GENERALIZATION -->
+                <div class="bg-cream dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-green-100 dark:bg-green-900/50 text-brandGreen font-mono text-xs px-3 py-1 rounded-full mb-4 font-bold">Generalization</span>
+                        <h3 class="text-xl font-bold mb-3">Generalisasi (Umum-Khusus)</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                            Hubungan bertingkat antara fungsi umum dan fungsi spesifik. Panah segitiga mengarah ke Use Case general.
+                        </p>
+                    </div>
+                    <div class="bg-white dark:bg-gray-700 p-4 rounded-xl text-xs space-y-2">
+                        <strong class="text-brandGreen">Contoh Kasus:</strong>
+                        <p class="text-gray-600 dark:text-gray-300 font-mono">Cari/Ubah Pustaka ----&gt; Mengelola Pustaka</p>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400">Mengelola pustaka adalah Use Case umum dari fungsi-fungsi spesifiknya.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: SISTEM FEEDBACK & DISKUSI INTERAKTIF -->
+    <section id="feedback" class="py-20 bg-cream dark:bg-darkbg border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                <span class="text-brandGreen font-bold tracking-wider uppercase text-sm">Interaksi & Evaluasi</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold">Feedback & Diskusi Interaktif</h2>
+                <p class="text-gray-600 dark:text-gray-400">Berikan ulasan, rating, atau pertanyaan terkait materi Use Case Diagram ini.</p>
+            </div>
+
+            <div class="grid md:grid-cols-12 gap-8">
+                <!-- Form Feedback -->
+                <div class="md:col-span-5 bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-md">
+                    <h3 class="text-lg font-bold mb-4 flex items-center space-x-2">
+                        <i class="fas fa-pen-to-square text-brandRed"></i>
+                        <span>Kirim Feedback</span>
+                    </h3>
+                    
+                    <form id="feedback-form" onsubmit="handleFeedbackSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 text-gray-700 dark:text-gray-300">Nama Lengkap</label>
+                            <input type="text" id="fb-name" placeholder="Masukkan nama Anda" required class="w-full px-3 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-cream dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-brandRed">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 text-gray-700 dark:text-gray-300">Rating Pemahaman Materi</label>
+                            <div class="flex space-x-2 text-2xl text-gray-300 dark:text-gray-600" id="star-rating-container">
+                                <i class="fas fa-star cursor-pointer hover:text-brandYellow transition" onclick="setRating(1)"></i>
+                                <i class="fas fa-star cursor-pointer hover:text-brandYellow transition" onclick="setRating(2)"></i>
+                                <i class="fas fa-star cursor-pointer hover:text-brandYellow transition" onclick="setRating(3)"></i>
+                                <i class="fas fa-star cursor-pointer hover:text-brandYellow transition" onclick="setRating(4)"></i>
+                                <i class="fas fa-star cursor-pointer hover:text-brandYellow transition" onclick="setRating(5)"></i>
+                            </div>
+                            <input type="hidden" id="fb-rating" value="5">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 text-gray-700 dark:text-gray-300">Ulasan / Pertanyaan</label>
+                            <textarea id="fb-message" rows="3" placeholder="Tulis masukan Anda..." required class="w-full px-3 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-cream dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-brandRed"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-brandGreen text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-green-700 shadow-md transition flex items-center justify-center space-x-2">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Kirim Feedback</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Feedbacks List -->
+                <div class="md:col-span-7 space-y-4">
+                    <h3 class="text-lg font-bold mb-4 flex items-center justify-between">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-comments text-brandYellow"></i>
+                            <span>Ulasan Pengguna</span>
+                        </span>
+                        <span id="feedback-count" class="text-xs bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-300 px-2.5 py-1 rounded-full font-mono font-bold">2 Ulasan</span>
+                    </h3>
+
+                    <div id="feedback-list" class="space-y-3 max-h-[380px] overflow-y-auto pr-1">
+                        <!-- Default Feedback Items -->
+                        <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm space-y-2">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-7 h-7 rounded-full bg-brandRed text-white text-xs font-bold flex items-center justify-center">B</div>
+                                    <span class="text-sm font-bold">Budi Santoso</span>
+                                    <span class="text-[10px] bg-red-100 dark:bg-red-900/40 text-brandRed px-2 py-0.5 rounded-full font-semibold">Mahasiswa</span>
+                                </div>
+                                <div class="text-brandYellow text-xs">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-600 dark:text-gray-300">Penjelasan mengenai perbedaan relasi include dan extend sangat jelas dan mudah dipahami!</p>
+                            <span class="text-[10px] text-gray-400 block">Baru saja</span>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm space-y-2">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-7 h-7 rounded-full bg-brandGreen text-white text-xs font-bold flex items-center justify-center">S</div>
+                                    <span class="text-sm font-bold">Siti Rahma</span>
+                                    <span class="text-[10px] bg-green-100 dark:bg-green-900/40 text-brandGreen px-2 py-0.5 rounded-full font-semibold">Mahasiswa</span>
+                                </div>
+                                <div class="text-brandYellow text-xs">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-600 dark:text-gray-300">Tampilan websitenya sangat rapi dan dark mode-nya sangat nyaman di mata saat belajar malam hari.</p>
+                            <span class="text-[10px] text-gray-400 block">10 menit lalu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-8 text-center text-xs text-gray-500 dark:text-gray-400">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 Institut Bisnis dan Informatika Kwik Kian Gie. Modul Pembelajaran Analisis & Perancangan Sistem Informasi.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL SYSTEM LOGIN -->
+    <div id="login-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-200 dark:border-gray-700 relative animate-fade-in">
+            <!-- Close Button -->
+            <button onclick="toggleLoginModal(false)" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                <i class="fas fa-xmark text-xl"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="text-center mb-6 space-y-2">
+                <div class="w-12 h-12 bg-red-100 dark:bg-red-900/40 text-brandRed rounded-2xl mx-auto flex items-center justify-center text-xl">
+                    <i class="fas fa-user-lock"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Portal Masuk</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Pilih peran dan masukkan akun perkuliahan Anda</p>
+            </div>
+
+            <!-- Modal Form -->
+            <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <!-- Role Selector -->
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-gray-700 dark:text-gray-300">Peran Pengguna</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" id="role-mhs" onclick="selectRole('Mahasiswa')" class="py-2.5 px-3 rounded-xl border border-brandRed bg-red-50 dark:bg-red-900/30 text-brandRed font-semibold text-xs flex items-center justify-center space-x-2 transition">
+                            <i class="fas fa-user-graduate"></i>
+                            <span>Mahasiswa</span>
+                        </button>
+                        <button type="button" id="role-dosen" onclick="selectRole('Dosen')" class="py-2.5 px-3 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 font-semibold text-xs flex items-center justify-center space-x-2 transition">
+                            <i class="fas fa-chalkboard-user"></i>
+                            <span>Dosen</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-gray-700 dark:text-gray-300">Email Akademik</label>
+                    <input type="email" id="login-email" placeholder="nama@ikwikkiangie.ac.id" required class="w-full px-3 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-cream dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-brandRed">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-gray-700 dark:text-gray-300">Kata Sandi</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required class="w-full px-3 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-cream dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-brandRed">
+                </div>
+
+                <button type="submit" class="w-full bg-brandRed text-white py-3 rounded-xl font-bold text-sm hover:bg-red-700 shadow-lg shadow-red-500/30 transition">
+                    Masuk Sekarang
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // State Management
+        let selectedRole = 'Mahasiswa';
+        let currentUser = null;
+        let currentRating = 5;
+        let feedbackCount = 2;
+
+        // Dark Mode Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.add('hidden');
+            darkIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            darkIcon.classList.add('hidden');
+            lightIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            lightIcon.classList.toggle('hidden');
+            darkIcon.classList.toggle('hidden');
+
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+
+        // Modal Login Toggle
+        function toggleLoginModal(show) {
+            const modal = document.getElementById('login-modal');
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Role Selection Logic
+        function selectRole(role) {
+            selectedRole = role;
+            const btnMhs = document.getElementById('role-mhs');
+            const btnDosen = document.getElementById('role-dosen');
+
+            if (role === 'Mahasiswa') {
+                btnMhs.className = 'py-2.5 px-3 rounded-xl border border-brandRed bg-red-50 dark:bg-red-900/30 text-brandRed font-semibold text-xs flex items-center justify-center space-x-2 transition';
+                btnDosen.className = 'py-2.5 px-3 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 font-semibold text-xs flex items-center justify-center space-x-2 transition';
+            } else {
+                btnDosen.className = 'py-2.5 px-3 rounded-xl border border-brandRed bg-red-50 dark:bg-red-900/30 text-brandRed font-semibold text-xs flex items-center justify-center space-x-2 transition';
+                btnMhs.className = 'py-2.5 px-3 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 font-semibold text-xs flex items-center justify-center space-x-2 transition';
+            }
+        }
+
+        // Handle Login Submission
+        function handleLoginSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const name = email.split('@')[0];
+            const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
+
+            currentUser = {
+                name: formattedName,
+                role: selectedRole,
+                email: email
+            };
+
+            // Update Navbar UI
+            const authContainer = document.getElementById('auth-container');
+            authContainer.innerHTML = `
+                <div class="flex items-center space-x-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-3 py-1.5 rounded-xl shadow-sm">
+                    <div class="w-6 h-6 rounded-full ${selectedRole === 'Mahasiswa' ? 'bg-brandRed' : 'bg-brandGreen'} text-white text-[10px] font-bold flex items-center justify-center">
+                        ${formattedName.charAt(0)}
+                    </div>
+                    <div class="text-xs">
+                        <span class="font-bold block leading-none">${formattedName}</span>
+                        <span class="text-[10px] text-gray-500 dark:text-gray-400 leading-none">${selectedRole}</span>
+                    </div>
+                    <button onclick="handleLogout()" class="text-gray-400 hover:text-brandRed text-xs ml-1" title="Logout">
+                        <i class="fas fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            `;
+
+            // Auto-fill Feedback Form Name
+            document.getElementById('fb-name').value = formattedName;
+
+            // Close Modal
+            toggleLoginModal(false);
+        }
+
+        // Handle Logout
+        function handleLogout() {
+            currentUser = null;
+            const authContainer = document.getElementById('auth-container');
+            authContainer.innerHTML = `
+                <button id="open-login-btn" onclick="toggleLoginModal(true)" class="bg-brandRed text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-red-700 shadow-md transition flex items-center space-x-2">
+                    <i class="fas fa-right-to-bracket"></i>
+                    <span>Login</span>
+                </button>
+            `;
+            document.getElementById('fb-name').value = '';
+        }
+
+        // Star Rating Selection Logic
+        function setRating(rating) {
+            currentRating = rating;
+            document.getElementById('fb-rating').value = rating;
+            const stars = document.getElementById('star-rating-container').children;
+
+            for (let i = 0; i < stars.length; i++) {
+                if (i < rating) {
+                    stars[i].className = 'fas fa-star cursor-pointer text-brandYellow transition';
+                } else {
+                    stars[i].className = 'fas fa-star cursor-pointer text-gray-300 dark:text-gray-600 transition';
+                }
+            }
+        }
+
+        // Handle Feedback Submission
+        function handleFeedbackSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('fb-name').value;
+            const message = document.getElementById('fb-message').value;
+            const rating = parseInt(document.getElementById('fb-rating').value);
+            const userRole = currentUser ? currentUser.role : 'Mahasiswa';
+
+            // Generate Star Icons HTML
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    starsHtml += '<i class="fas fa-star"></i>';
+                } else {
+                    starsHtml += '<i class="far fa-star"></i>';
+                }
+            }
+
+            // Create New Feedback Element
+            const feedbackList = document.getElementById('feedback-list');
+            const newFeedback = document.createElement('div');
+            newFeedback.className = 'bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm space-y-2 animate-fade-in';
+            newFeedback.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-full ${userRole === 'Mahasiswa' ? 'bg-brandRed' : 'bg-brandGreen'} text-white text-xs font-bold flex items-center justify-center">${name.charAt(0).toUpperCase()}</div>
+                        <span class="text-sm font-bold">${name}</span>
+                        <span class="text-[10px] ${userRole === 'Mahasiswa' ? 'bg-red-100 dark:bg-red-900/40 text-brandRed' : 'bg-green-100 dark:bg-green-900/40 text-brandGreen'} px-2 py-0.5 rounded-full font-semibold">${userRole}</span>
+                    </div>
+                    <div class="text-brandYellow text-xs">
+                        ${starsHtml}
+                    </div>
+                </div>
+                <p class="text-xs text-gray-600 dark:text-gray-300">${message}</p>
+                <span class="text-[10px] text-gray-400 block">Baru saja</span>
+            `;
+
+            // Insert to Top of List
+            feedbackList.insertBefore(newFeedback, feedbackList.firstChild);
+
+            // Update Counter
+            feedbackCount++;
+            document.getElementById('feedback-count').textContent = `${feedbackCount} Ulasan`;
+
+            // Reset Message Input
+            document.getElementById('fb-message').value = '';
+            setRating(5);
+        }
+
+        // Initialize default star rating
+        setRating(5);
+    </script>
+</body>
+</html>
